@@ -5,17 +5,17 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser.Expressions
 {
     public class LiteralExpression : ExpressionSyntax
     {
-        private SyntaxToken token;
+        public SyntaxToken Token;
 
         public LiteralExpression(SyntaxToken token)
         {
-            this.token = token;
+            Token = token;
         }
 
         public override SyntaxTokenType Type => SyntaxTokenType.LiteralExpression;
         public override IEnumerable<SyntaxNode> GetChildren()
         {
-            yield return token;
+            yield return Token;
         }
     }
 }

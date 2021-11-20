@@ -5,23 +5,23 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser.Expressions
 {
     public class BinaryExpression : ExpressionSyntax
     {
-        private ExpressionSyntax left;
-        private SyntaxToken op;
-        private ExpressionSyntax right;
+        public ExpressionSyntax Left;
+        public SyntaxToken Op;
+        public ExpressionSyntax Right;
 
         public BinaryExpression(ExpressionSyntax left, SyntaxToken op, ExpressionSyntax right)
         {
-            this.left = left;
-            this.op = op;
-            this.right = right;
+            Left = left;
+            Op = op;
+            Right = right;
         }
 
         public override SyntaxTokenType Type => SyntaxTokenType.BinaryExpression;
         public override IEnumerable<SyntaxNode> GetChildren()
         {
-            yield return left;
-            yield return op;
-            yield return right;
+            yield return Left;
+            yield return Op;
+            yield return Right;
         }
     }
 }
