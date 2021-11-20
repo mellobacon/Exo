@@ -6,9 +6,9 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser
 {
     public class Parser
     {
+        // keep track of the tokens we parse
         private int _position;
         private readonly List<SyntaxToken> _tokens = new();
-        
         private SyntaxToken Current => Peek(0);
         
         public Parser(string text)

@@ -9,16 +9,17 @@ namespace DumbassP.Compiler.CodeAnalysis.Lexer
         public string Text;
         public object Value;
         public override SyntaxTokenType Type { get; }
-        public override IEnumerable<SyntaxNode> GetChildren()
-        {
-            return Enumerable.Empty<SyntaxNode>(); // Theres no node to return so fuck off
-        }
 
         public SyntaxToken(string text, object value, SyntaxTokenType type)
         {
             Text = text;
             Value = value;
             Type = type;
+        }
+        
+        public override IEnumerable<SyntaxNode> GetChildren()
+        {
+            return Enumerable.Empty<SyntaxNode>(); // Theres no node to return so fuck off
         }
     }
 }

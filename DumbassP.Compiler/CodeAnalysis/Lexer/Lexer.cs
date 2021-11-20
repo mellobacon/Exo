@@ -6,7 +6,7 @@
         private object _value;
         private SyntaxTokenType _type;
 
-        // keeps track of where the lexer is lexing in the string ig
+        // keeps track of where the lexer is lexing in the string
         private int _start;
         private int _position;
         private char _current => Peek(0);
@@ -81,6 +81,7 @@
 
         private void LexString()
         {
+            // strings with either "" or '' works. might change later
             switch (_current)
             {
                 case '"':
@@ -121,8 +122,7 @@
                 }
             }
         }
-
-        // lexes the string
+        
         public SyntaxToken Lex()
         {
             _start = _position;
@@ -181,7 +181,7 @@
 
                     break;
             }
-
+            
             var text = SyntaxPrecedence.GetText(_type);
             var length = _position - _start;
             if (text is null)

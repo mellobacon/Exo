@@ -5,6 +5,7 @@
         
         public static int GetBinaryPrecedence(SyntaxTokenType type)
         {
+            // follows pemdas
             return type switch
             {
                 SyntaxTokenType.StarToken => 4,
