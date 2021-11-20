@@ -11,6 +11,9 @@
         StarToken,
         OpenParenToken,
         ClosedParenToken,
+        
+        BinaryExpression,
+        LiteralExpression,
 
         WhiteSpaceToken,
         BadToken,
