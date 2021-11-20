@@ -2,6 +2,19 @@
 {
     public static class SyntaxPrecedence
     {
+        
+        public static int GetBinaryPrecedence(SyntaxTokenType type)
+        {
+            return type switch
+            {
+                SyntaxTokenType.StarToken => 4,
+                SyntaxTokenType.SlashToken => 3,
+                SyntaxTokenType.PlusToken => 2,
+                SyntaxTokenType.MinusToken => 1,
+                _ => 0
+            };
+        }
+        
         public static string GetText(SyntaxTokenType type)
         {
             return type switch
