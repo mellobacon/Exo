@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Text;
+using DumbassP.Compiler.CodeAnalysis.Evaluator;
 using DumbassP.Compiler.CodeAnalysis.Lexer;
 using DumbassP.Compiler.CodeAnalysis.Parser;
 
@@ -81,8 +82,17 @@ namespace DumbassP.Compiler
                     }
                 }
                 */
+                
                 SyntaxTree tree = SyntaxTree.Parse(text);
                 ShowTree(tree.Root);
+                Evaluator evaluator = new Evaluator(tree.Root);
+                var result = evaluator.Evaluate();
+                if (result != null)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine(result);
+                    Console.ResetColor();
+                }
                 textbuilder.Clear();
             }
         }
