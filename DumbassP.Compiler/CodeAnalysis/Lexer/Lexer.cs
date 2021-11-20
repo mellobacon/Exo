@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DumbassP.Compiler.CodeAnalysis.Lexer
+﻿namespace DumbassP.Compiler.CodeAnalysis.Lexer
 {
     public class Lexer
     {
