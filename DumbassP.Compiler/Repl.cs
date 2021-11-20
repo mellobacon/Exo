@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using DumbassP.Compiler.CodeAnalysis.Lexer;
+using DumbassP.Compiler.CodeAnalysis.Parser;
 
 namespace DumbassP.Compiler
 {
@@ -17,14 +19,19 @@ namespace DumbassP.Compiler
         // command prompt // (for cmd only)
         // is colored? (cmd only)
 
-        // function  Run(file). just runs cmd if theres no file specified
+        // just runs cmd if theres no file specified
         public void Run(string path = null)
         {
-            // runs the lang. probably going to end up just being the lexer ig. compiler...eh maybe not? idk we will see
             var textbuilder = new StringBuilder();
+            StreamReader file = null;
+            if (path != null)
+            {
+                file = new StreamReader(path);
+            }
             while (true)
             {
-                var input = "";
+                // Get the input depending if its from the cmd or a file
+                string input;
                 if (path is null)
                 {
                     if (textbuilder.Length == 0)
@@ -40,10 +47,10 @@ namespace DumbassP.Compiler
                 }
                 else
                 {
-                    using var file = new StreamReader(path);
                     input = file.ReadLine();
                 }
 
+                // Process the input
                 var isblank = string.IsNullOrWhiteSpace(input);
                 if (isblank && textbuilder.Length == 0)
                 {
@@ -52,6 +59,7 @@ namespace DumbassP.Compiler
                 textbuilder.AppendLine(input);
                 var text = textbuilder.ToString();
                 
+                /*
                 // lex
                 var lexer = new Lexer(text);
                 while (true)
@@ -72,6 +80,58 @@ namespace DumbassP.Compiler
                         Console.Write($"[{token.Type}]");
                     }
                 }
+                */
+                SyntaxTree tree = SyntaxTree.Parse(text);
+                ShowTree(tree.Root);
+                textbuilder.Clear();
+            }
+        }
+
+        private static void ShowTree(SyntaxNode node, string indent = "", bool isLast = true)
+        {
+            var marker = isLast ? "└──" : "├──";
+            Console.Write(indent);
+            Console.Write(marker);
+
+            switch (node.Type)
+            {
+                case SyntaxTokenType.BinaryExpression:
+                    Console.ForegroundColor = ConsoleColor.DarkBlue;
+                    Console.Write(node.Type);
+                    Console.ResetColor();
+                    break;
+                case SyntaxTokenType.LiteralExpression:
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.Write(node.Type);
+                    Console.ResetColor();
+                    break;
+                case SyntaxTokenType.StarToken:
+                case SyntaxTokenType.SlashToken:
+                case SyntaxTokenType.PlusToken:
+                case SyntaxTokenType.MinusToken:
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.Write(node.Type);
+                    Console.ResetColor();
+                    break;
+                default:
+                    Console.ResetColor();
+                    Console.Write(node.Type);
+                    break;
+            }
+
+            // Basically for printing numbers
+            if (node is SyntaxToken token && token.Value != null)
+            {
+                Console.Write(" ");
+                Console.Write(token.Value);
+            }
+
+            Console.WriteLine();
+            indent += isLast ? "   " : "│  ";
+            var last = node.GetChildren().LastOrDefault();
+            foreach (var child in node.GetChildren())
+            {
+                ShowTree(child, indent, child == last);
             }
         }
     }
