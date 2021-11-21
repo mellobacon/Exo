@@ -36,19 +36,26 @@ namespace DumbassP.Compiler.CodeAnalysis.Evaluator
                 var right = EvaluateExpression(b.Right);
                 
                 // if one of the numbers is an int convert both numbers to ints (except division)
-                switch (op.Type)
+                if (left is float || right is float)
                 {
-                    case SyntaxTokenType.PlusToken:
-                        return (int)left + (int)right;
-                    case SyntaxTokenType.MinusToken:
-                        return (int)left - (int)right;
-                    case SyntaxTokenType.StarToken:
-                        return (int)left * (int)right;
-                    case SyntaxTokenType.SlashToken:
-                        return (float)left / (float)right;
-                    default:
-                        throw new Exception($"Unexpected binary operator {b.Op}");
+                    return op.Type switch
+                    {
+                        SyntaxTokenType.PlusToken => Convert.ToSingle(left) + Convert.ToSingle(right),
+                        SyntaxTokenType.MinusToken => Convert.ToSingle(left) - Convert.ToSingle(right),
+                        SyntaxTokenType.StarToken => Convert.ToSingle(left) * Convert.ToSingle(right),
+                        SyntaxTokenType.SlashToken => Convert.ToSingle(left) / Convert.ToSingle(right),
+                        _ => throw new Exception($"Unexpected binary operator {b.Op}")
+                    };
                 }
+
+                return op.Type switch
+                {
+                    SyntaxTokenType.PlusToken => (int)left + (int)right,
+                    SyntaxTokenType.MinusToken => (int)left - (int)right,
+                    SyntaxTokenType.StarToken => (int)left * (int)right,
+                    SyntaxTokenType.SlashToken => Convert.ToSingle(left) / Convert.ToSingle(right),
+                    _ => throw new Exception($"Unexpected binary operator {b.Op}")
+                };
             }
 
             return null;
