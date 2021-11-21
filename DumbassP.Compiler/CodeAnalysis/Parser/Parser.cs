@@ -62,8 +62,17 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser
 
         private ExpressionSyntax ParseLiteralExpression()
         {
-            var number = MatchToken(SyntaxTokenType.NumberToken);
-            return new LiteralExpression(number);
+            switch (Current.Type)
+            {
+                case SyntaxTokenType.OpenParenToken:
+                    var openparen = MatchToken(SyntaxTokenType.OpenParenToken);
+                    var expression = ParseBinaryExpression();
+                    var closedparen = MatchToken(SyntaxTokenType.ClosedParenToken);
+                    return new GroupedExpression(openparen, expression, closedparen);
+                default:
+                    var number = MatchToken(SyntaxTokenType.NumberToken);
+                    return new LiteralExpression(number);
+            }
         }
 
         private SyntaxToken Peek(int offset)

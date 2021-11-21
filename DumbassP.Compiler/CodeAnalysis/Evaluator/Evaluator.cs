@@ -19,6 +19,11 @@ namespace DumbassP.Compiler.CodeAnalysis.Evaluator
 
         private object EvaluateExpression(ExpressionSyntax root)
         {
+            if (root is GroupedExpression g)
+            {
+                return EvaluateExpression(g.Expression);
+            }
+            
             return root.Type switch
             {
                 SyntaxTokenType.BinaryExpression => EvaluateBinaryExpression(root),

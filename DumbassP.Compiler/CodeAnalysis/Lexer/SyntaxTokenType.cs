@@ -14,6 +14,7 @@
         
         BinaryExpression,
         LiteralExpression,
+        GroupedExpression,
 
         WhiteSpaceToken,
         BadToken,
