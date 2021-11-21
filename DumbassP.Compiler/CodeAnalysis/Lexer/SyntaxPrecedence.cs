@@ -2,15 +2,14 @@
 {
     public static class SyntaxPrecedence
     {
-        
         public static int GetBinaryPrecedence(SyntaxTokenType type)
         {
             // follows pemdas
             return type switch
             {
-                SyntaxTokenType.StarToken => 4,
-                SyntaxTokenType.SlashToken => 3,
-                SyntaxTokenType.PlusToken => 2,
+                SyntaxTokenType.SlashToken => 2,
+                SyntaxTokenType.StarToken => 2,
+                SyntaxTokenType.PlusToken => 1,
                 SyntaxTokenType.MinusToken => 1,
                 _ => 0
             };
