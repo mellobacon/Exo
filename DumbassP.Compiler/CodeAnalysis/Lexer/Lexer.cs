@@ -1,4 +1,6 @@
-﻿namespace DumbassP.Compiler.CodeAnalysis.Lexer
+﻿using DumbassP.Compiler.CodeAnalysis.Errors;
+
+namespace DumbassP.Compiler.CodeAnalysis.Lexer
 {
     public class Lexer
     {
@@ -10,6 +12,9 @@
         private int _start;
         private int _position;
         private char _current => Peek(0);
+        
+        // keeps track of any errors during when lexing
+        public readonly ErrorList Errors = new();
 
         public Lexer(string text)
         {
@@ -56,6 +61,7 @@
                 if (!float.TryParse(text, out var value))
                 {
                     // e
+                    Errors.ReportInvalidNumberConversion(text, typeof(float));
                 }
                 _value = value;   
             }
@@ -64,6 +70,7 @@
                 if (!int.TryParse(text, out var value))
                 {
                     // e
+                    Errors.ReportInvalidNumberConversion(text, typeof(int));
                 }
 
                 _value = value;
@@ -169,13 +176,14 @@
                         // lex whitespace token
                         LexWhiteSpace();
                     }
-                    else if (char.IsLetter(_current) || _current is '"' or '\'')
+                    else if (_current is '"' or '\'')
                     {
                         // lex string token
                         LexString();
                     }
                     else
                     {
+                        Errors.ReportBadCharacter(_current);
                         Advance(1);
                     }
 

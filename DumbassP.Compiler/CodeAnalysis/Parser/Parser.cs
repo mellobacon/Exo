@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DumbassP.Compiler.CodeAnalysis.Errors;
 using DumbassP.Compiler.CodeAnalysis.Lexer;
 using DumbassP.Compiler.CodeAnalysis.Parser.Expressions;
 
@@ -10,7 +11,8 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser
         private int _position;
         private readonly List<SyntaxToken> _tokens = new();
         private SyntaxToken Current => Peek(0);
-        
+        private readonly ErrorList _errors = new();
+
         public Parser(string text)
         {
             // Lex the tokens and add them to the tokens list for parsing
@@ -29,7 +31,8 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser
                 }
                 _tokens.Add(token);
             }
-
+            // add errors to the errors list
+            _errors.Concat(lexer.Errors);
             _tokens.ToArray();
         }
 
@@ -38,7 +41,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser
             // recursive decent parser
             var expression = ParseBinaryExpression();
             var eof_token = MatchToken(SyntaxTokenType.EofToken);
-            return new SyntaxTree(expression, eof_token);
+            return new SyntaxTree(expression, eof_token, _errors);
         }
 
         private ExpressionSyntax ParseBinaryExpression(int precedence = 0)
