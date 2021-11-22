@@ -62,13 +62,13 @@ namespace DumbassP.Compiler.CodeAnalysis.Evaluator
                 SyntaxTokenType.SlashToken => Convert.ToSingle(left) / Convert.ToSingle(right),
                 _ => throw new Exception($"Unexpected binary operator {b.Op}")
             };
-
         }
 
         private object EvaluateLiteralExpression(ExpressionSyntax root)
         {
             if (root is not LiteralExpression n) return null;
-            
+            if (n.Token.Text == null) return null; // got lazy and dont feel like figuring out how to deal with
+                                                   // strings so here you go
             // Return float or int depending on which number it is...this is a bad comment isnt it...
             if (n.Token.Text.Contains('.'))
             {
