@@ -50,6 +50,7 @@ namespace DumbassP.Compiler
                 else
                 {
                     input = file.ReadLine();
+                    Console.WriteLine(input);
                 }
 
                 // Process the input
