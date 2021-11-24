@@ -8,8 +8,10 @@ namespace DumbassP
         {
             var repl = new Repl()
             {
-                Prompt = "» "
+                Prompt = "» ",
+                MultilinePrompt = "→ "
             };
+            //repl.Run(@"../../../TestCode.txt");
             repl.Run();
         }
     }
