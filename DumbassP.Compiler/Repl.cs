@@ -9,32 +9,46 @@ using DumbassP.Compiler.CodeAnalysis.Parser;
 
 namespace DumbassP.Compiler
 {
+    /**
+     * Runs the compiler based on input
+     */
     public class Repl
     {
-        // prompt
+        /**
+         * The commandline prompt
+         */
         public string Prompt = ">";
 
-        // multiline prompt (for cmd only)
+        /**
+         * The commandline prompt for multilines
+         */
         public string MultilinePrompt = "#";
+        
         // prompt color
         // multiline prompt color
         // command prompt // (for cmd only)
         // is colored? (cmd only)
-
-        // just runs cmd if theres no file specified
+        
+        /**
+         * <summary>Runs the compiler. If there is no argument specified, it will run via inputs from the cmd.</summary>
+         * <param name="path">The path to a text file</param>
+         */
         public void Run(string path = null)
         {
             var textbuilder = new StringBuilder();
+            
+            // Set the file for getting input from it
             StreamReader file = null;
             if (path != null)
             {
                 file = new StreamReader(path);
             }
+            
             while (true)
             {
                 // Get the input depending if its from the cmd or a file
                 string input;
-                if (path is null)
+                if (path is null) // Get input from the cmd
                 {
                     if (textbuilder.Length == 0)
                     {
@@ -47,7 +61,7 @@ namespace DumbassP.Compiler
                         input = Console.ReadLine();
                     }
                 }
-                else
+                else // Get input from the file
                 {
                     input = file.ReadLine();
                     Console.WriteLine(input);
@@ -59,6 +73,7 @@ namespace DumbassP.Compiler
                 {
                     break;
                 }
+                // Collect every line of input to be evaluated
                 textbuilder.AppendLine(input);
                 var text = textbuilder.ToString();
                 
@@ -85,6 +100,7 @@ namespace DumbassP.Compiler
                 }
                 */
                 
+                // Get and print the syntax tree. This is for tranparency.
                 SyntaxTree tree = SyntaxTree.Parse(text);
                 if (!isblank && tree.Errors.Any())
                 {
@@ -92,6 +108,7 @@ namespace DumbassP.Compiler
                 }
                 ShowTree(tree.Root);
                 
+                // Evaluate the expression and print the output, along with any errors
                 Compilation compilation = new Compilation(tree);
                 Result result = compilation.Evaluate();
 
@@ -113,12 +130,19 @@ namespace DumbassP.Compiler
             }
         }
 
+        /**
+         * <summary>Prints the syntax tree</summary>
+         * <param name="node">The node to put in the tree</param>
+         * <param name="indent">The string to indent with. Defaults to an empty string</param>
+         * <param name="isLast">Defines if the node is the last in the branch. Defaults to true</param>
+         */
         private static void ShowTree(SyntaxNode node, string indent = "", bool isLast = true)
         {
             var marker = isLast ? "└──" : "├──";
             Console.Write(indent);
             Console.Write(marker);
 
+            // Print the node
             switch (node.Type)
             {
                 case SyntaxTokenType.BinaryExpression:
