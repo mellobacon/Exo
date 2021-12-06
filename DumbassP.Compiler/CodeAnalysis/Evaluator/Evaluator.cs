@@ -60,6 +60,8 @@ namespace DumbassP.Compiler.CodeAnalysis.Evaluator
                 SyntaxTokenType.MinusToken => (int)left - (int)right,
                 SyntaxTokenType.StarToken => (int)left * (int)right,
                 SyntaxTokenType.SlashToken => Convert.ToSingle(left) / Convert.ToSingle(right),
+                SyntaxTokenType.DoublePipeToken => (bool)left || (bool)right,
+                SyntaxTokenType.DoubleAmpersandToken => (bool)left && (bool)right,
                 _ => throw new Exception($"Unexpected binary operator {b.Op}")
             };
         }
@@ -74,7 +76,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Evaluator
             {
                 return (float)n.Token.Value;
             }
-            return (int)n.Token.Value;
+            return n.Token.Value;
 
         }
     }
