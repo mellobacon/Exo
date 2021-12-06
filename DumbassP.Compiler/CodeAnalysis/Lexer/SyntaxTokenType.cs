@@ -9,8 +9,15 @@
         MinusToken,
         SlashToken,
         StarToken,
+        ModuloToken,
         OpenParenToken,
         ClosedParenToken,
+        
+        DoublePipeToken,
+        DoubleAmpersandToken,
+        
+        TrueKeyword,
+        FalseKeyword,
         
         BinaryExpression,
         LiteralExpression,
