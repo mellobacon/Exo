@@ -129,6 +129,22 @@ namespace DumbassP.Compiler.CodeAnalysis.Lexer
                 }
             }
         }
+
+        void LexKeyword()
+        {
+            while (char.IsLetter(_current))
+            {
+                Advance(1);
+            }
+
+            var length = _position - _start;
+            var text = _text.Substring(_start, length);
+            _type = SyntaxPrecedence.GetKeywordType(text);
+            
+            if (_type == SyntaxTokenType.TrueKeyword) _value = true;
+            if (_type == SyntaxTokenType.FalseKeyword) _value = false;
+            
+        }
         
         public SyntaxToken Lex()
         {
@@ -157,6 +173,24 @@ namespace DumbassP.Compiler.CodeAnalysis.Lexer
                     _type = SyntaxTokenType.StarToken;
                     Advance(1);
                     break;
+                case '%':
+                    _type = SyntaxTokenType.ModuloToken;
+                    Advance(1);
+                    break;
+                case '|':
+                    if (Peek(1) == '|')
+                    {
+                        _type = SyntaxTokenType.DoublePipeToken;
+                    }
+                    Advance(2);
+                    break;
+                case '&':
+                    if (Peek(1) == '&')
+                    {
+                        _type = SyntaxTokenType.DoubleAmpersandToken;
+                    }
+                    Advance(2);
+                    break;
                 case '(':
                     _type = SyntaxTokenType.OpenParenToken;
                     Advance(1);
@@ -175,6 +209,11 @@ namespace DumbassP.Compiler.CodeAnalysis.Lexer
                     {
                         // lex whitespace token
                         LexWhiteSpace();
+                    }
+                    else if (char.IsLetter(_current))
+                    {
+                        // lex keywords
+                        LexKeyword();
                     }
                     else if (_current is '"' or '\'')
                     {
