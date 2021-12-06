@@ -7,11 +7,23 @@
             // follows pemdas
             return type switch
             {
-                SyntaxTokenType.SlashToken => 2,
-                SyntaxTokenType.StarToken => 2,
-                SyntaxTokenType.PlusToken => 1,
-                SyntaxTokenType.MinusToken => 1,
+                SyntaxTokenType.SlashToken => 4,
+                SyntaxTokenType.StarToken => 4,
+                SyntaxTokenType.PlusToken => 3,
+                SyntaxTokenType.MinusToken => 3,
+                SyntaxTokenType.ModuloToken => 3,
+                SyntaxTokenType.DoubleAmpersandToken => 2,
+                SyntaxTokenType.DoublePipeToken => 1,
                 _ => 0
+            };
+        }
+
+        public static SyntaxTokenType GetKeywordType(string text)
+        {
+            return text switch
+            {
+                "True" => SyntaxTokenType.TrueKeyword,
+                "False" => SyntaxTokenType.FalseKeyword,
             };
         }
         
@@ -25,6 +37,9 @@
                 SyntaxTokenType.SlashToken => "/",
                 SyntaxTokenType.OpenParenToken => "(",
                 SyntaxTokenType.ClosedParenToken => ")",
+                SyntaxTokenType.DoublePipeToken => "||",
+                SyntaxTokenType.DoubleAmpersandToken => "&&",
+                SyntaxTokenType.ModuloToken => "%",
                 /*
                 SyntaxTokenType.OpenBracketToken => "{",
                 SyntaxTokenType.ClosedBracketToken => "}",
@@ -37,9 +52,6 @@
                 SyntaxTokenType.EqualsEqualsToken => "==",
                 SyntaxTokenType.LessEqualsToken => "<=",
                 SyntaxTokenType.GreatEqualsToken => ">=",
-                SyntaxTokenType.OrPipeToken => "||",
-                SyntaxTokenType.AndAmpersandToken => "&&",
-                SyntaxTokenType.ModuloToken => "%",
                 SyntaxTokenType.StarStarToken => "**",
                 SyntaxTokenType.PlusEqualsToken => "+=",
                 SyntaxTokenType.MinusEqualsToken => "-=",
