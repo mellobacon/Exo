@@ -36,7 +36,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Errors
 
         public void ReportUnExpectedToken(string token, SyntaxTokenType result, SyntaxTokenType expected)
         {
-            string message = $"Heehoo unexpected token {token}: got {result} not {expected}";
+            string message = $"Heehoo unexpected token <{token}>: got {result} not {expected}";
             _errors.Add(new Error(message));
         }
     }
