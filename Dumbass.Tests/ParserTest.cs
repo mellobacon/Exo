@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Dumbass.Tests
 {
-    public class ParserTest
+    public static class ParserTest
     {
         private static IEnumerable<SyntaxTokenType> BinaryOpTypes()
         {
