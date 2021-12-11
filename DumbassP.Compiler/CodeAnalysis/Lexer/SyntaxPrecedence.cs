@@ -24,6 +24,7 @@
             {
                 "True" => SyntaxTokenType.TrueKeyword,
                 "False" => SyntaxTokenType.FalseKeyword,
+                _ => SyntaxTokenType.BadToken
             };
         }
         
