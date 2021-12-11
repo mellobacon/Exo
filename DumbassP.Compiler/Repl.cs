@@ -76,31 +76,8 @@ namespace DumbassP.Compiler
                 // Collect every line of input to be evaluated
                 textbuilder.AppendLine(input);
                 var text = textbuilder.ToString();
-                
-                /*
-                // lex
-                var lexer = new Lexer(text);
-                while (true)
-                {
-                    var token = lexer.Lex();
-                    if (token.Type == SyntaxTokenType.EofToken)
-                    {
-                        textbuilder.Clear();
-                        Console.WriteLine();
-                        break;
-                    }
-                    if (token.Type != SyntaxTokenType.WhiteSpaceToken && token.Value != null)
-                    {
-                        Console.Write($"[{token.Type}:{token.Value}]");   
-                    }
-                    else if (token.Type != SyntaxTokenType.WhiteSpaceToken)
-                    {
-                        Console.Write($"[{token.Type}]");
-                    }
-                }
-                */
-                
-                // Get and print the syntax tree. This is for tranparency.
+
+                // Get and print the syntax tree. This is for transparency when parsing.
                 SyntaxTree tree = SyntaxTree.Parse(text);
                 if (!isblank && tree.Errors.Any())
                 {
