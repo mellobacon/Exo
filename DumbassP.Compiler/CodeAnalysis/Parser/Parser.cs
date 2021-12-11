@@ -20,16 +20,17 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser
             while (true)
             {
                 var token = lexer.Lex();
-                if (token.Type == SyntaxTokenType.EofToken)
-                {
-                    break;
-                }
-                
+
                 if (token.Type is SyntaxTokenType.WhiteSpaceToken or SyntaxTokenType.BadToken)
                 {
                     continue;
                 }
                 _tokens.Add(token);
+                
+                if (token.Type == SyntaxTokenType.EofToken)
+                {
+                    break;
+                }
             }
             // add errors to the errors list
             _errors.Concat(lexer.Errors);
@@ -49,14 +50,14 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser
             var left = ParseLiteralExpression();
             while (true)
             {
-                int current_precedence = SyntaxPrecedence.GetBinaryPrecedence(Current.Type);
-                if (current_precedence.Equals(0) || current_precedence <= precedence)
+                int currentPrecedence = SyntaxPrecedence.GetBinaryPrecedence(Current.Type);
+                if (currentPrecedence.Equals(0) || currentPrecedence <= precedence)
                 {
                     break;
                 }
 
                 var op = NextToken();
-                var right = ParseBinaryExpression(current_precedence);
+                var right = ParseBinaryExpression(currentPrecedence);
                 left = new BinaryExpression(left, op, right);
             }
 
@@ -75,7 +76,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser
                 case SyntaxTokenType.FalseKeyword:
                 case SyntaxTokenType.TrueKeyword:
                     var keywordtoken = NextToken();
-                    var value = keywordtoken.Type == SyntaxTokenType.TrueKeyword;
+                    bool value = keywordtoken.Type == SyntaxTokenType.TrueKeyword;
                     return new LiteralExpression(keywordtoken, value);
                 default:
                     var number = MatchToken(SyntaxTokenType.NumberToken);
@@ -85,7 +86,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser
 
         private SyntaxToken Peek(int offset)
         {
-            var index = _position + offset;
+            int index = _position + offset;
             return index >= _tokens.Count ? _tokens[^1] : _tokens[index];
         }
 
@@ -95,7 +96,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser
             {
                 return NextToken();
             }
-
+            _errors.ReportUnExpectedToken(Current.Text, Current.Type, type);
             return new SyntaxToken(null, null, type);
         }
 
