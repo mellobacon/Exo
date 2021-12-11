@@ -39,7 +39,9 @@ namespace DumbassP.Compiler.CodeAnalysis.Evaluator
             var left = EvaluateExpression(b.Left);
             var op = b.Op;
             var right = EvaluateExpression(b.Right);
-                
+
+            if (left == null || right == null) return null;
+
             // If one of the numbers is a float convert both numbers to floats else make sure both are ints
             // (except division)
             if (left is float || right is float)
