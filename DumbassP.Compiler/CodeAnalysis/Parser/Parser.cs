@@ -34,7 +34,6 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser
             }
             // add errors to the errors list
             _errors.Concat(lexer.Errors);
-            _tokens.ToArray();
         }
 
         public SyntaxTree Parse()
@@ -78,6 +77,9 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser
                     var keywordtoken = NextToken();
                     bool value = keywordtoken.Type == SyntaxTokenType.TrueKeyword;
                     return new LiteralExpression(keywordtoken, value);
+                case SyntaxTokenType.VariableToken:
+                    var variabletoken = MatchToken(SyntaxTokenType.VariableToken);
+                    return new LiteralExpression(variabletoken);
                 default:
                     var number = MatchToken(SyntaxTokenType.NumberToken);
                     return new LiteralExpression(number);
