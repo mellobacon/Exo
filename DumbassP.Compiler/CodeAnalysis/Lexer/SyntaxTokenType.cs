@@ -4,6 +4,7 @@
     {
         NumberToken,
         StringToken,
+        VariableToken,
         
         PlusToken,
         MinusToken,
