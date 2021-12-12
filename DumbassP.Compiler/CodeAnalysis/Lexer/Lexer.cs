@@ -60,7 +60,6 @@ namespace DumbassP.Compiler.CodeAnalysis.Lexer
             {
                 if (!float.TryParse(text, out var value))
                 {
-                    // e
                     Errors.ReportInvalidNumberConversion(text, typeof(float));
                 }
                 _value = value;   
@@ -69,7 +68,6 @@ namespace DumbassP.Compiler.CodeAnalysis.Lexer
             {
                 if (!int.TryParse(text, out var value))
                 {
-                    // e
                     Errors.ReportInvalidNumberConversion(text, typeof(int));
                 }
 
@@ -130,7 +128,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Lexer
             }
         }
 
-        void LexKeyword()
+        private void LexKeyword()
         {
             while (char.IsLetter(_current))
             {
@@ -202,22 +200,18 @@ namespace DumbassP.Compiler.CodeAnalysis.Lexer
                 default:
                     if (char.IsDigit(_current))
                     {
-                        // lex number token
                         LexNumber();
                     }
                     else if (char.IsWhiteSpace(_current))
                     {
-                        // lex whitespace token
                         LexWhiteSpace();
                     }
                     else if (char.IsLetter(_current))
                     {
-                        // lex keywords
                         LexKeyword();
                     }
                     else if (_current is '"' or '\'')
                     {
-                        // lex string token
                         LexString();
                     }
                     else
