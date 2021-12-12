@@ -94,7 +94,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Lexer
                 case '"':
                 {
                     Advance(1);
-                    while (char.IsLetter(_current) || char.IsWhiteSpace(_current) || char.IsNumber(_current))
+                    while (_current != '"')
                     {
                         Advance(1);
                     }
@@ -112,7 +112,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Lexer
                 case '\'':
                 {
                     Advance(1);
-                    while (char.IsLetter(_current) || char.IsWhiteSpace(_current) || char.IsNumber(_current))
+                    while (_current != '\'')
                     {
                         Advance(1);
                     }
