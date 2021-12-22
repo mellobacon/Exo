@@ -9,18 +9,18 @@ namespace Dumbass.Tests
 {
     public class AssertingNumerator : IDisposable
     {
-        readonly IEnumerator<SyntaxNode> _Enumerator;
-        private bool HasErrors;
+        private readonly IEnumerator<SyntaxNode> _enumerator;
+        private bool _hasErrors;
 
         public AssertingNumerator(SyntaxNode node)
         {
             // Get the list of nodes
-            _Enumerator = Flatten(node).GetEnumerator();
+            _enumerator = Flatten(node).GetEnumerator();
         }
 
         private bool MarkFailed()
         {
-            HasErrors = true;
+            _hasErrors = true;
             return false;
         }
 
@@ -32,10 +32,10 @@ namespace Dumbass.Tests
 
             while (stack.Count > 0)
             {
-                var n = stack.Pop(); // the root or subroot node
+                SyntaxNode n = stack.Pop(); // the root or subroot node
                 yield return n;
                 // get each child of each root. reversed because yes. what am i smart to you?
-                foreach (var child in n.GetChildren().Reverse())
+                foreach (SyntaxNode? child in n.GetChildren().Reverse())
                 {
                     stack.Push(child);   
                 }
@@ -46,11 +46,11 @@ namespace Dumbass.Tests
         {
             try
             {
-                Assert.True(_Enumerator.MoveNext());
-                if (_Enumerator.Current != null)
+                Assert.True(_enumerator.MoveNext());
+                if (_enumerator.Current != null)
                 {
-                    Assert.Equal(type, _Enumerator.Current.Type);
-                    Assert.IsNotType<SyntaxToken>(_Enumerator.Current);
+                    Assert.Equal(type, _enumerator.Current.Type);
+                    Assert.IsNotType<SyntaxToken>(_enumerator.Current);
                 }
             }
             catch when (MarkFailed())
@@ -63,11 +63,11 @@ namespace Dumbass.Tests
         {
             try
             {
-                Assert.True(_Enumerator.MoveNext());
-                if (_Enumerator.Current != null)
+                Assert.True(_enumerator.MoveNext());
+                if (_enumerator.Current != null)
                 {
-                    Assert.Equal(type, _Enumerator.Current.Type);
-                    var token = Assert.IsType<SyntaxToken>(_Enumerator.Current);
+                    Assert.Equal(type, _enumerator.Current.Type);
+                    var token = Assert.IsType<SyntaxToken>(_enumerator.Current);
                     Assert.Equal(text, token.Text);
                 }
             }
@@ -79,11 +79,11 @@ namespace Dumbass.Tests
 
         public void Dispose()
         {
-            if (!HasErrors)
+            if (!_hasErrors)
             {
-                Assert.False(_Enumerator.MoveNext());   
+                Assert.False(_enumerator.MoveNext());   
             }
-            _Enumerator.Dispose();
+            _enumerator.Dispose();
         }
     }
 }
