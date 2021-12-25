@@ -15,7 +15,7 @@ namespace Dumbass.Tests
             Lexer lexer = new (text);
             while (true)
             {
-                var token = lexer.Lex();
+                SyntaxToken? token = lexer.Lex();
                 if (token.Type == SyntaxTokenType.EofToken)
                 {
                     break;
@@ -29,7 +29,7 @@ namespace Dumbass.Tests
 
         private static IEnumerable<object[]> GetTokenData()
         {
-            foreach (var (text, type) in GetTokens())
+            foreach ((string text, SyntaxTokenType type) in GetTokens())
             {
                 yield return new object[] {text, type};
             }
@@ -42,6 +42,8 @@ namespace Dumbass.Tests
                 ("1", SyntaxTokenType.NumberToken),
                 ("123", SyntaxTokenType.NumberToken),
                 ("1.23", SyntaxTokenType.NumberToken),
+                ("1_000", SyntaxTokenType.NumberToken),
+                ("100__000_______________000", SyntaxTokenType.NumberToken),
                 ("+", SyntaxTokenType.PlusToken),
                 ("-", SyntaxTokenType.MinusToken),
                 ("/", SyntaxTokenType.SlashToken),
@@ -53,12 +55,16 @@ namespace Dumbass.Tests
                 ("&&", SyntaxTokenType.DoubleAmpersandToken),
                 ("False", SyntaxTokenType.FalseKeyword),
                 ("True", SyntaxTokenType.TrueKeyword),
+                ("_Test", SyntaxTokenType.VariableToken),
+                ("_1000", SyntaxTokenType.VariableToken),
                 ("\"string\"", SyntaxTokenType.StringToken),
                 ("\"str ing\"", SyntaxTokenType.StringToken),
                 ("\"THE FITNESS GRAM PACER TEST IS A-\"", SyntaxTokenType.StringToken),
-                ("'MULTISTEP AROBITIC TEST THAT INCREASES IN DIFF-'", SyntaxTokenType.StringToken),
+                ("'MULTI-STEP ACROBATIC TEST THAT INCREASES IN DIFF-'", SyntaxTokenType.StringToken),
                 ("\")(**^%^&(*uyGYU5789324U3J\"", SyntaxTokenType.StringToken),
-                ("')(**^%^&(*uyGYU5789324U3J'", SyntaxTokenType.StringToken)
+                ("')(**^%^&(*uyGYU5789324U3J'", SyntaxTokenType.StringToken),
+                ("1.2.3", SyntaxTokenType.BadToken),
+                ("1000_", SyntaxTokenType.BadToken)
             };
         }
     }
