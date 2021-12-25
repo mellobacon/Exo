@@ -19,7 +19,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser
 
         public static SyntaxTree Parse(string text)
         {
-            Parser parser = new Parser(text);
+            var parser = new Parser(text);
             return parser.Parse();
         }
     }
