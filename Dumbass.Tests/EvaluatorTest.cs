@@ -11,6 +11,9 @@ namespace Dumbass.Tests
         {
             var evals = new (string text, object value)[]
             {
+                ("1", 1),
+                ("1_000", 1000),
+                ("1_000 * 5", 5000),
                 ("1 + 2 + 3", 6),
                 ("1 + 2 * 3", 7),
                 ("(1 + 2) * 3", 9),
@@ -22,7 +25,7 @@ namespace Dumbass.Tests
                 ("True && True", true),
                 ("True && False", false)
             };
-            foreach (var (text, value) in evals)
+            foreach ((string text, object value) in evals)
             {
                 yield return new[] { text, value };
             }
