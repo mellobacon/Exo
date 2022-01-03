@@ -1,13 +1,13 @@
 ﻿using System;
-using DumbassP.Compiler.CodeAnalysis.Lexer;
-using DumbassP.Compiler.CodeAnalysis.Parser.Expressions;
+using DumbassP.Compiler.CodeAnalysis.Binding;
+using DumbassP.Compiler.CodeAnalysis.Binding.Expressions;
 
 namespace DumbassP.Compiler.CodeAnalysis.Evaluator
 {
     public class Evaluator
     {
-        private readonly ExpressionSyntax _root;
-        public Evaluator(ExpressionSyntax root)
+        private readonly IBoundExpression _root;
+        public Evaluator(IBoundExpression root)
         {
             _root = root;
         }
@@ -17,28 +17,23 @@ namespace DumbassP.Compiler.CodeAnalysis.Evaluator
             return EvaluateExpression(_root);
         }
 
-        private object EvaluateExpression(ExpressionSyntax root)
+        private object EvaluateExpression(IBoundExpression root)
         {
-            if (root is GroupedExpression g)
+            return root.BoundType switch
             {
-                return EvaluateExpression(g.Expression);
-            }
-            
-            return root.Type switch
-            {
-                SyntaxTokenType.BinaryExpression => EvaluateBinaryExpression(root),
-                SyntaxTokenType.LiteralExpression => EvaluateLiteralExpression(root),
+                BoundType.BinaryExpression => EvaluateBinaryExpression(root),
+                BoundType.LiteralExpression => EvaluateLiteralExpression(root),
                 _ => null
             };
         }
 
-        private object EvaluateBinaryExpression(ExpressionSyntax root)
+        private object EvaluateBinaryExpression(IBoundExpression root)
         {
-            if (root is not BinaryExpression b) return null;
+            if (root is not BinaryBoundExpression b) return null;
             
-            var left = EvaluateExpression(b.Left);
-            var op = b.Op;
-            var right = EvaluateExpression(b.Right);
+            object left = EvaluateExpression(b.Left);
+            BoundBinaryOperator op = b.Op;
+            object right = EvaluateExpression(b.Right);
 
             if (left == null || right == null) return null;
 
@@ -46,42 +41,33 @@ namespace DumbassP.Compiler.CodeAnalysis.Evaluator
             // (except division)
             if (left is float || right is float)
             {
-                return op.Type switch
+                return op.BoundType switch
                 {
-                    SyntaxTokenType.PlusToken => Convert.ToSingle(left) + Convert.ToSingle(right),
-                    SyntaxTokenType.MinusToken => Convert.ToSingle(left) - Convert.ToSingle(right),
-                    SyntaxTokenType.StarToken => Convert.ToSingle(left) * Convert.ToSingle(right),
-                    SyntaxTokenType.SlashToken => Convert.ToSingle(left) / Convert.ToSingle(right),
-                    SyntaxTokenType.ModuloToken => Convert.ToSingle(left) % Convert.ToSingle(right),
+                    BinaryOperatorType.Addition => Convert.ToSingle(left) + Convert.ToSingle(right),
+                    BinaryOperatorType.Subtraction => Convert.ToSingle(left) - Convert.ToSingle(right),
+                    BinaryOperatorType.Multiplication => Convert.ToSingle(left) * Convert.ToSingle(right),
+                    BinaryOperatorType.Division => Convert.ToSingle(left) / Convert.ToSingle(right),
+                    BinaryOperatorType.Modulo => Convert.ToSingle(left) % Convert.ToSingle(right),
                     _ => throw new Exception($"Unexpected binary operator {b.Op}")
                 };
             }
 
-            return op.Type switch
+            return op.BoundType switch
             {
-                SyntaxTokenType.PlusToken => (int)left + (int)right,
-                SyntaxTokenType.MinusToken => (int)left - (int)right,
-                SyntaxTokenType.StarToken => (int)left * (int)right,
-                SyntaxTokenType.SlashToken => Convert.ToSingle(left) / Convert.ToSingle(right),
-                SyntaxTokenType.ModuloToken => (int)left % (int)right,
-                SyntaxTokenType.DoublePipeToken => (bool)left || (bool)right,
-                SyntaxTokenType.DoubleAmpersandToken => (bool)left && (bool)right,
+                BinaryOperatorType.Addition => (int)left + (int)right,
+                BinaryOperatorType.Subtraction => (int)left - (int)right,
+                BinaryOperatorType.Multiplication => (int)left * (int)right,
+                BinaryOperatorType.Division => Convert.ToSingle(left) / Convert.ToSingle(right),
+                BinaryOperatorType.Modulo => (int)left % (int)right,
+                BinaryOperatorType.LogicalOr => (bool)left || (bool)right,
+                BinaryOperatorType.LogicalAnd => (bool)left && (bool)right,
                 _ => throw new Exception($"Unexpected binary operator {b.Op}")
             };
         }
 
-        private object EvaluateLiteralExpression(ExpressionSyntax root)
+        private object EvaluateLiteralExpression(IBoundExpression root)
         {
-            if (root is not LiteralExpression n) return null;
-            if (n.Token.Text == null) return null; // got lazy and dont feel like figuring out how to deal with
-                                                   // strings so here you go
-            // Return float or int depending on which number it is...this is a bad comment isnt it...
-            if (n.Token.Text.Contains('.'))
-            {
-                return (float)n.Token.Value;
-            }
-            return n.Token.Value;
-
+            return root is not LiteralBoundExpression n ? null : n.Value;
         }
     }
 }
