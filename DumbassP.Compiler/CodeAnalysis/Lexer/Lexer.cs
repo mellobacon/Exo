@@ -15,7 +15,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Lexer
         private char Current => Peek(0);
         
         // keeps track of any errors during when lexing
-        public readonly ErrorList Errors = new();
+        public ErrorList Errors { get; } = new();
 
         public Lexer(string text)
         {
