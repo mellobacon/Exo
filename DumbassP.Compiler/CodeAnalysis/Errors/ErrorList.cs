@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DumbassP.Compiler.CodeAnalysis.Lexer;
 
@@ -37,6 +38,12 @@ namespace DumbassP.Compiler.CodeAnalysis.Errors
         public void ReportUnExpectedToken(string token, SyntaxTokenType result, SyntaxTokenType expected)
         {
             string message = $"Heehoo unexpected token <{token}>: got {result} not {expected}";
+            _errors.Add(new Error(message));
+        }
+
+        public void ReportUndefinedBinaryOperator(Type left, string op, Type right)
+        {
+            string message = $"Heehoo bad binary operator {op} cant be applied to {left} and {right}";
             _errors.Add(new Error(message));
         }
     }
