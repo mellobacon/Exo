@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using DumbassP.Compiler.CodeAnalysis.Lexer;
 using Xunit;
@@ -8,7 +7,7 @@ namespace Dumbass.Tests
     public static class LexerTest
     {
         [Theory]
-        [MemberData(nameof(GetTokenData))]
+        [MemberData(nameof(GetTokens))]
         public static void Lexer_Can_Lex(string text, SyntaxTokenType type)
         {
             var tokens = new List<SyntaxToken>();
@@ -27,17 +26,9 @@ namespace Dumbass.Tests
             Assert.Equal(type, t.Type);
         }
 
-        private static IEnumerable<object[]> GetTokenData()
+        private static IEnumerable<object[]> GetTokens()
         {
-            foreach ((string text, SyntaxTokenType type) in GetTokens())
-            {
-                yield return new object[] {text, type};
-            }
-        }
-
-        private static IEnumerable<(string text, SyntaxTokenType type)> GetTokens()
-        {
-            return new[]
+            var tokens = new (string text, SyntaxTokenType type)[]
             {
                 ("1", SyntaxTokenType.NumberToken),
                 ("123", SyntaxTokenType.NumberToken),
@@ -66,6 +57,10 @@ namespace Dumbass.Tests
                 ("1.2.3", SyntaxTokenType.BadToken),
                 ("1000_", SyntaxTokenType.BadToken)
             };
+            foreach ((string text, SyntaxTokenType type) in tokens)
+            {
+                yield return new object[] {text, type};
+            }
         }
     }
 }
