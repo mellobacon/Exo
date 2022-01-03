@@ -79,10 +79,10 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser
                     return new LiteralExpression(keywordtoken, value);
                 case SyntaxTokenType.VariableToken:
                     var variabletoken = MatchToken(SyntaxTokenType.VariableToken);
-                    return new LiteralExpression(variabletoken);
+                    return new LiteralExpression(variabletoken, variabletoken.Value);
                 default:
                     var number = MatchToken(SyntaxTokenType.NumberToken);
-                    return new LiteralExpression(number);
+                    return new LiteralExpression(number, number.Value);
             }
         }
 
