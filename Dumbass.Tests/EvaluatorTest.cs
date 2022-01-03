@@ -35,7 +35,7 @@ namespace Dumbass.Tests
         public static void Evaluator_Outputs_Correct_Value(string text, object value)
         {
             SyntaxTree tree = SyntaxTree.Parse(text);
-            Compilation compilation = new Compilation(tree);
+            var compilation = new Compilation(tree);
             Result result = compilation.Evaluate();
             Assert.Equal(value, result.Value);
         }

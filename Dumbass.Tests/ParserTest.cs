@@ -13,7 +13,7 @@ namespace Dumbass.Tests
         private static IEnumerable<SyntaxTokenType> BinaryOpTypes()
         {
             var types = (SyntaxTokenType[]) Enum.GetValues(typeof(SyntaxTokenType));
-            foreach (var type in types)
+            foreach (SyntaxTokenType type in types)
             {
                 if (SyntaxPrecedence.GetBinaryPrecedence(type) > 0)
                 {
@@ -24,9 +24,9 @@ namespace Dumbass.Tests
 
         private static IEnumerable BinaryOpData()
         {
-            foreach (var op1 in BinaryOpTypes())
+            foreach (SyntaxTokenType op1 in BinaryOpTypes())
             {
-                foreach (var op2 in BinaryOpTypes())
+                foreach (SyntaxTokenType op2 in BinaryOpTypes())
                 {
                     yield return new object[] { op1, op2 };
                 }
@@ -35,8 +35,8 @@ namespace Dumbass.Tests
 
         private static ExpressionSyntax ParseExpression(string text)
         {
-            var tree = SyntaxTree.Parse(text);
-            var root = tree.Root;
+            SyntaxTree? tree = SyntaxTree.Parse(text);
+            ExpressionSyntax? root = tree.Root;
             return root;
         }
 
@@ -44,13 +44,13 @@ namespace Dumbass.Tests
         [MemberData(nameof(BinaryOpData))]
         public static void Parser_Honors_Precedence(SyntaxTokenType type1, SyntaxTokenType type2)
         {
-            var typeprecedence1 = SyntaxPrecedence.GetBinaryPrecedence(type1);
-            var typeprecedence2 = SyntaxPrecedence.GetBinaryPrecedence(type2);
-            var typetext1 = SyntaxPrecedence.GetText(type1);
-            var typetext2 = SyntaxPrecedence.GetText(type2);
+            int typeprecedence1 = SyntaxPrecedence.GetBinaryPrecedence(type1);
+            int typeprecedence2 = SyntaxPrecedence.GetBinaryPrecedence(type2);
+            string? typetext1 = SyntaxPrecedence.GetText(type1);
+            string? typetext2 = SyntaxPrecedence.GetText(type2);
 
             var text = $"1 {typetext1} 2 {typetext2} 3";
-            var expression = ParseExpression(text);
+            ExpressionSyntax expression = ParseExpression(text);
             
             // What the tree should look like depending on precedence
             using var e = new AssertingNumerator(expression);

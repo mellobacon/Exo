@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using System;
 using DumbassP.Compiler.CodeAnalysis.Errors;
 
 namespace DumbassP.Compiler.CodeAnalysis.Lexer
@@ -116,7 +115,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Lexer
                     {
                         Advance(1);
                         int length = _position - _start;
-                        string? text = _text.Substring(_start, length);
+                        string text = _text.Substring(_start, length);
                         _type = SyntaxTokenType.StringToken;
                         _value = text;
                     }
@@ -134,7 +133,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Lexer
                     {
                         Advance(1);
                         int length = _position - _start;
-                        string? text = _text.Substring(_start, length);
+                        string text = _text.Substring(_start, length);
                         _type = SyntaxTokenType.StringToken;
                         _value = text;
                     }
