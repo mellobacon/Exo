@@ -11,7 +11,6 @@ namespace DumbassP
                 Prompt = "» ",
                 MultilinePrompt = "→ "
             };
-            //repl.Run(@"../../../TestCode.txt");
             repl.Run();
         }
     }

@@ -2,8 +2,8 @@
 {
     public struct TextSpan
     {
-        public int Start;
-        public int Length;
+        public readonly int Start;
+        public readonly int Length;
         public int End => Start + Length;
         public TextSpan(int start, int length)
         {

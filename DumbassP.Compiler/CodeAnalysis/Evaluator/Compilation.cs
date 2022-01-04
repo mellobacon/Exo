@@ -24,11 +24,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Evaluator
             var evaluator = new Evaluator(expression);
             _value = evaluator.Evaluate();
 
-            if (errors.Any())
-            {
-                return new Result(errors, null);
-            }
-            return new Result(errors, _value);
+            return errors.Any() ? new Result(errors, null) : new Result(errors, _value);
         }
     }
 }

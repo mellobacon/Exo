@@ -5,9 +5,9 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser.Expressions
 {
     public class GroupedExpression : ExpressionSyntax
     {
-        private SyntaxToken LeftOp;
-        public ExpressionSyntax Expression;
-        private SyntaxToken RightOp;
+        private readonly SyntaxToken LeftOp;
+        public readonly ExpressionSyntax Expression;
+        private readonly SyntaxToken RightOp;
         public GroupedExpression(SyntaxToken leftOp, ExpressionSyntax expression, SyntaxToken rightOp)
         {
             LeftOp = leftOp;

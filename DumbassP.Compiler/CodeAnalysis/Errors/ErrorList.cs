@@ -32,8 +32,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Errors
         public void ReportBadCharacter(char character, int position)
         {
             TextSpan span = new(position, 1);
-            //string message = $"Heehoo bad character: {character} is not a valid character";
-            string message = "you dumb fuck";
+            string message = $"Heehoo bad character: {character} is not a valid character";
             _errors.Add(new Error(span, message));
         }
 

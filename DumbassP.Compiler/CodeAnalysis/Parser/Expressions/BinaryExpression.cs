@@ -5,9 +5,9 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser.Expressions
 {
     public class BinaryExpression : ExpressionSyntax
     {
-        public ExpressionSyntax Left;
-        public SyntaxToken Op;
-        public ExpressionSyntax Right;
+        public readonly ExpressionSyntax Left;
+        public readonly SyntaxToken Op;
+        public readonly ExpressionSyntax Right;
 
         public BinaryExpression(ExpressionSyntax left, SyntaxToken op, ExpressionSyntax right)
         {

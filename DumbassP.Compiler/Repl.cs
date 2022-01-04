@@ -23,12 +23,7 @@ namespace DumbassP.Compiler
          * The commandline prompt for multilines
          */
         public string MultilinePrompt = "#";
-        
-        // prompt color
-        // multiline prompt color
-        // command prompt // (for cmd only)
-        // is colored? (cmd only)
-        
+
         /**
          * <summary>Runs the compiler. If there is no argument specified, it will run via inputs from the cmd.</summary>
          * <param name="path">The path to a text file</param>
@@ -68,7 +63,7 @@ namespace DumbassP.Compiler
                 }
 
                 // Process the input
-                var isblank = string.IsNullOrWhiteSpace(input);
+                bool isblank = string.IsNullOrWhiteSpace(input);
                 if (isblank && textbuilder.Length == 0)
                 {
                     break;
@@ -102,7 +97,7 @@ namespace DumbassP.Compiler
                     Console.WriteLine();
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine(error);
-                    Console.ResetColor(); ;
+                    Console.ResetColor();
 
                     string prefix = text[..error.TextSpan.Start];
                     string e = text.Substring(error.TextSpan.Start, error.TextSpan.Length);
@@ -116,12 +111,12 @@ namespace DumbassP.Compiler
                     Console.WriteLine();
                     
                     Console.ForegroundColor = ConsoleColor.DarkRed;
-                    for (int _ = 0; _ < prefix.Length; _++)
+                    for (var _ = 0; _ < prefix.Length; _++)
                     {
                         Console.Write(" ");
                     }
 
-                    for (int _ = 0; _ < e.Length; _++)
+                    for (var _ = 0; _ < e.Length; _++)
                     {
                         Console.Write("^");
                     }
@@ -141,7 +136,7 @@ namespace DumbassP.Compiler
          */
         private static void ShowTree(SyntaxNode node, string indent = "", bool isLast = true)
         {
-            var marker = isLast ? "└──" : "├──";
+            string marker = isLast ? "└──" : "├──";
             Console.Write(indent);
             Console.Write(marker);
 
@@ -181,8 +176,8 @@ namespace DumbassP.Compiler
 
             Console.WriteLine();
             indent += isLast ? "   " : "│  ";
-            var last = node.GetChildren().LastOrDefault();
-            foreach (var child in node.GetChildren())
+            SyntaxNode last = node.GetChildren().LastOrDefault();
+            foreach (SyntaxNode child in node.GetChildren())
             {
                 ShowTree(child, indent, child == last);
             }

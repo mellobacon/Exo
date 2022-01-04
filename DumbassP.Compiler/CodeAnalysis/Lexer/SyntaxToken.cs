@@ -6,9 +6,9 @@ namespace DumbassP.Compiler.CodeAnalysis.Lexer
 {
     public class SyntaxToken : SyntaxNode
     {
-        public string Text;
+        public readonly string Text;
         public readonly object Value;
-        public int Position;
+        public readonly int Position;
         public TextSpan TextSpan => new(Position, Text.Length);
         public override SyntaxTokenType Type { get; }
 

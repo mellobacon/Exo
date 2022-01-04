@@ -5,8 +5,8 @@ namespace DumbassP.Compiler.CodeAnalysis.Evaluator
 {
     public class Result
     {
-        public ErrorList Errors;
-        public object Value;
+        public readonly ErrorList Errors;
+        public readonly object Value;
         public Result(ErrorList errors, object value)
         {
             Errors = errors;

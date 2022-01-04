@@ -16,10 +16,10 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser
         public Parser(string text)
         {
             // Lex the tokens and add them to the tokens list for parsing
-            Lexer.Lexer lexer = new Lexer.Lexer(text);
+            var lexer = new Lexer.Lexer(text);
             while (true)
             {
-                var token = lexer.Lex();
+                SyntaxToken token = lexer.Lex();
 
                 if (token.Type is SyntaxTokenType.WhiteSpaceToken or SyntaxTokenType.BadToken)
                 {
@@ -39,14 +39,14 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser
         public SyntaxTree Parse()
         {
             // recursive decent parser
-            var expression = ParseBinaryExpression();
-            var eof_token = MatchToken(SyntaxTokenType.EofToken);
+            ExpressionSyntax expression = ParseBinaryExpression();
+            SyntaxToken eof_token = MatchToken(SyntaxTokenType.EofToken);
             return new SyntaxTree(expression, eof_token, _errors);
         }
 
         private ExpressionSyntax ParseBinaryExpression(int precedence = 0)
         {
-            var left = ParseLiteralExpression();
+            ExpressionSyntax left = ParseLiteralExpression();
             while (true)
             {
                 int currentPrecedence = SyntaxPrecedence.GetBinaryPrecedence(Current.Type);
@@ -55,8 +55,8 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser
                     break;
                 }
 
-                var op = NextToken();
-                var right = ParseBinaryExpression(currentPrecedence);
+                SyntaxToken op = NextToken();
+                ExpressionSyntax right = ParseBinaryExpression(currentPrecedence);
                 left = new BinaryExpression(left, op, right);
             }
 
@@ -68,20 +68,20 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser
             switch (Current.Type)
             {
                 case SyntaxTokenType.OpenParenToken:
-                    var openparen = MatchToken(SyntaxTokenType.OpenParenToken);
-                    var expression = ParseBinaryExpression();
-                    var closedparen = MatchToken(SyntaxTokenType.ClosedParenToken);
+                    SyntaxToken openparen = MatchToken(SyntaxTokenType.OpenParenToken);
+                    ExpressionSyntax expression = ParseBinaryExpression();
+                    SyntaxToken closedparen = MatchToken(SyntaxTokenType.ClosedParenToken);
                     return new GroupedExpression(openparen, expression, closedparen);
                 case SyntaxTokenType.FalseKeyword:
                 case SyntaxTokenType.TrueKeyword:
-                    var keywordtoken = NextToken();
+                    SyntaxToken keywordtoken = NextToken();
                     bool value = keywordtoken.Type == SyntaxTokenType.TrueKeyword;
                     return new LiteralExpression(keywordtoken, value);
                 case SyntaxTokenType.VariableToken:
-                    var variabletoken = MatchToken(SyntaxTokenType.VariableToken);
+                    SyntaxToken variabletoken = MatchToken(SyntaxTokenType.VariableToken);
                     return new LiteralExpression(variabletoken, variabletoken.Value);
                 default:
-                    var number = MatchToken(SyntaxTokenType.NumberToken);
+                    SyntaxToken number = MatchToken(SyntaxTokenType.NumberToken);
                     return new LiteralExpression(number, number.Value);
             }
         }
@@ -104,7 +104,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser
 
         private SyntaxToken NextToken()
         {
-            var current = Current;
+            SyntaxToken current = Current;
             _position++;
             return current;
         }
