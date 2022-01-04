@@ -98,8 +98,8 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser
             {
                 return NextToken();
             }
-            _errors.ReportUnExpectedToken(Current.Text, Current.Type, type);
-            return new SyntaxToken(null, null, type);
+            _errors.ReportUnExpectedToken(Current.TextSpan, Current.Text, Current.Type, type);
+            return new SyntaxToken(null, null, type, _position);
         }
 
         private SyntaxToken NextToken()

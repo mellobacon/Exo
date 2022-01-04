@@ -69,7 +69,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Lexer
                 }
                 else
                 {
-                    Errors.ReportInvalidNumberConversion(text, typeof(float));
+                    Errors.ReportInvalidNumberConversion(new TextSpan(_start, length), text, typeof(float));
                 }
             }
             else
@@ -80,7 +80,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Lexer
                 }
                 else
                 {
-                    Errors.ReportInvalidNumberConversion(text, typeof(int));
+                    Errors.ReportInvalidNumberConversion(new TextSpan(_start, length), text, typeof(int));
                 }
             }
 
@@ -227,7 +227,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Lexer
                     LexString();
                     break;
                 default:
-                    Errors.ReportBadCharacter(Current);
+                    Errors.ReportBadCharacter(Current, _position);
                     Advance(1);
                     break;
             }
@@ -239,7 +239,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Lexer
                 text = _text.Substring(_start, length);
             }
 
-            return new SyntaxToken(text, _value, _type);
+            return new SyntaxToken(text, _value, _type, _position);
         }
     }
 }

@@ -35,7 +35,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Binding
             BoundBinaryOperator op = BoundBinaryOperator.GetOp(left.Type, syntax.Op.Type, right.Type);
             if (op is null)
             {
-                Errors.ReportUndefinedBinaryOperator(left.Type, syntax.Op.Text, right.Type);
+                Errors.ReportUndefinedBinaryOperator(syntax.Op.TextSpan ,left.Type, syntax.Op.Text, right.Type);
                 return left;
             }
             return new BinaryBoundExpression(left, op, right);

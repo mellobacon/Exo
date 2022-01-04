@@ -2,9 +2,11 @@
 {
     public class Error
     {
+        public TextSpan TextSpan;
         private string _message;
-        public Error(string message)
+        public Error(TextSpan span, string message)
         {
+            TextSpan = span;
             _message = message;
         }
 
