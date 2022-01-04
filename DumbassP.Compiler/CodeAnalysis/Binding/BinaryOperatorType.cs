@@ -7,6 +7,10 @@
         Multiplication,
         Division,
         Modulo,
+        LessThan,
+        MoreThan,
+        LessEqual,
+        MoreEqual,
         LogicalOr,
         LogicalAnd
     }

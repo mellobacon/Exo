@@ -12,6 +12,9 @@ namespace Dumbass.Tests
             var evals = new (string text, object value)[]
             {
                 ("1", 1),
+                ("1.5", 1.5f),
+                ("0.6 + 0.1", 0.70000005f), // smh float point
+                ("1 + 0.5", 1.5f),
                 ("1_000", 1000),
                 ("1_000 * 5", 5000),
                 ("1 + 2 + 3", 6),
@@ -19,6 +22,12 @@ namespace Dumbass.Tests
                 ("(1 + 2) * 3", 9),
                 ("1 / 2", 0.5f),
                 ("1 % 2", 1),
+                ("1 < 2", true),
+                ("9 > 1", true),
+                ("1.5 > 3", false),
+                ("0.6 < 0.7", true),
+                ("5 <= 5", true),
+                ("25 >= 63", false),
                 ("False", false),
                 ("True", true),
                 ("False || True", true),

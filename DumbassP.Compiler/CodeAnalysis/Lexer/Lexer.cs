@@ -192,6 +192,32 @@ namespace DumbassP.Compiler.CodeAnalysis.Lexer
                     _type = SyntaxTokenType.ModuloToken;
                     Advance(1);
                     break;
+                case '<':
+                    if (Peek(1) == '=')
+                    {
+                        _type = SyntaxTokenType.LessEqualsToken;
+                        Advance(2);
+                    }
+                    else
+                    {
+                        _type = SyntaxTokenType.LessThanToken;
+                        Advance(1);
+                    }
+
+                    break;
+                case '>':
+                    if (Peek(1) == '=')
+                    {
+                        _type = SyntaxTokenType.MoreEqualsToken;
+                        Advance(2);
+                    }
+                    else
+                    {
+                        _type = SyntaxTokenType.MoreThanToken;
+                        Advance(1);
+                    }
+
+                    break;
                 case '|':
                     if (Peek(1) == '|')
                     {

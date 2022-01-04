@@ -11,6 +11,10 @@
         SlashToken,
         StarToken,
         ModuloToken,
+        LessThanToken,
+        MoreThanToken,
+        LessEqualsToken,
+        MoreEqualsToken,
         OpenParenToken,
         ClosedParenToken,
         
