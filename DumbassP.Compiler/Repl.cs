@@ -89,17 +89,43 @@ namespace DumbassP.Compiler
                 Compilation compilation = new Compilation(tree);
                 Result result = compilation.Evaluate();
 
-                if (result.Value != null)
+                if (!result.Errors.Any())
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine(result.Value);
                     Console.ResetColor();
                 }
-
+                
                 foreach (Error error in result.Errors.ToArray())
                 {
+                    if (error.ToString().Contains("Eof")) break;
+                    Console.WriteLine();
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine(error);
+                    Console.ResetColor(); ;
+
+                    string prefix = text[..error.TextSpan.Start];
+                    string e = text.Substring(error.TextSpan.Start, error.TextSpan.Length);
+                    string suffix = text[error.TextSpan.End..];
+                    
+                    Console.Write(prefix);
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.Write(e);
+                    Console.ResetColor();
+                    Console.Write(suffix.TrimEnd());
+                    Console.WriteLine();
+                    
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    for (int _ = 0; _ < prefix.Length; _++)
+                    {
+                        Console.Write(" ");
+                    }
+
+                    for (int _ = 0; _ < e.Length; _++)
+                    {
+                        Console.Write("^");
+                    }
+                    Console.WriteLine();
                     Console.ResetColor();
                 }
 
