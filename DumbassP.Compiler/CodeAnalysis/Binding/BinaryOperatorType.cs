@@ -11,6 +11,7 @@
         MoreThan,
         LessEqual,
         MoreEqual,
+        Equal,
         LogicalOr,
         LogicalAnd
     }

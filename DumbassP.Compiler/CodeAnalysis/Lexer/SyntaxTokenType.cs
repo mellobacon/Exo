@@ -15,6 +15,7 @@
         MoreThanToken,
         LessEqualsToken,
         MoreEqualsToken,
+        EqualsEqualsToken,
         OpenParenToken,
         ClosedParenToken,
         

@@ -218,6 +218,14 @@ namespace DumbassP.Compiler.CodeAnalysis.Lexer
                     }
 
                     break;
+                case '=':
+                    if (Peek(1) == '=')
+                    {
+                        _type = SyntaxTokenType.EqualsEqualsToken;
+                        Advance(2);
+                    }
+
+                    break;
                 case '|':
                     if (Peek(1) == '|')
                     {

@@ -16,6 +16,7 @@
                 SyntaxTokenType.MoreThanToken => 3,
                 SyntaxTokenType.LessEqualsToken => 3,
                 SyntaxTokenType.MoreEqualsToken => 3,
+                SyntaxTokenType.EqualsEqualsToken => 3,
                 SyntaxTokenType.DoubleAmpersandToken => 2,
                 SyntaxTokenType.DoublePipeToken => 1,
                 _ => 0
