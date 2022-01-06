@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO.MemoryMappedFiles;
 using DumbassP.Compiler.CodeAnalysis.Binding.Expressions;
 using DumbassP.Compiler.CodeAnalysis.Errors;
 using DumbassP.Compiler.CodeAnalysis.Lexer;
