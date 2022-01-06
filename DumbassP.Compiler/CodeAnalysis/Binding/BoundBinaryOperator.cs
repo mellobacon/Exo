@@ -19,6 +19,9 @@ namespace DumbassP.Compiler.CodeAnalysis.Binding
             RightType = rightType;
             ResultType = resultType;
         }
+        
+        private BoundBinaryOperator(BinaryOperatorType boundType, SyntaxTokenType syntaxTokenType, Type type, Type resultType) 
+            : this(boundType, syntaxTokenType, type, type, resultType) {}
 
         private BoundBinaryOperator(BinaryOperatorType boundType, SyntaxTokenType syntaxTokenType, Type type) : this(
             boundType, syntaxTokenType, type, type, type) {}
@@ -49,25 +52,31 @@ namespace DumbassP.Compiler.CodeAnalysis.Binding
             new(BinaryOperatorType.Modulo, SyntaxTokenType.ModuloToken, typeof(int)),
             new(BinaryOperatorType.Modulo, SyntaxTokenType.ModuloToken, typeof(float)),
             
-            new(BinaryOperatorType.LessThan, SyntaxTokenType.LessThanToken, typeof(int)),
-            new(BinaryOperatorType.LessThan, SyntaxTokenType.LessThanToken, typeof(float)),
-            new(BinaryOperatorType.LessThan, SyntaxTokenType.LessThanToken, typeof(int), typeof(float), typeof(float)),
-            new(BinaryOperatorType.LessThan, SyntaxTokenType.LessThanToken, typeof(float), typeof(int), typeof(float)),
+            new(BinaryOperatorType.LessThan, SyntaxTokenType.LessThanToken, typeof(int), typeof(bool)),
+            new(BinaryOperatorType.LessThan, SyntaxTokenType.LessThanToken, typeof(float), typeof(bool)),
+            new(BinaryOperatorType.LessThan, SyntaxTokenType.LessThanToken, typeof(int), typeof(float), typeof(bool)),
+            new(BinaryOperatorType.LessThan, SyntaxTokenType.LessThanToken, typeof(float), typeof(int), typeof(bool)),
             
-            new(BinaryOperatorType.MoreThan, SyntaxTokenType.MoreThanToken, typeof(int)),
-            new(BinaryOperatorType.MoreThan, SyntaxTokenType.MoreThanToken, typeof(float)),
-            new(BinaryOperatorType.MoreThan, SyntaxTokenType.MoreThanToken, typeof(int), typeof(float), typeof(float)),
-            new(BinaryOperatorType.MoreThan, SyntaxTokenType.MoreThanToken, typeof(float), typeof(int), typeof(float)),
+            new(BinaryOperatorType.MoreThan, SyntaxTokenType.MoreThanToken, typeof(int), typeof(bool)),
+            new(BinaryOperatorType.MoreThan, SyntaxTokenType.MoreThanToken, typeof(float), typeof(bool)),
+            new(BinaryOperatorType.MoreThan, SyntaxTokenType.MoreThanToken, typeof(int), typeof(float), typeof(bool)),
+            new(BinaryOperatorType.MoreThan, SyntaxTokenType.MoreThanToken, typeof(float), typeof(int), typeof(bool)),
 
-            new(BinaryOperatorType.LessEqual, SyntaxTokenType.LessEqualsToken, typeof(int)),
-            new(BinaryOperatorType.LessEqual, SyntaxTokenType.LessEqualsToken, typeof(float)),
-            new(BinaryOperatorType.LessEqual, SyntaxTokenType.LessEqualsToken, typeof(int), typeof(float), typeof(float)),
-            new(BinaryOperatorType.LessEqual, SyntaxTokenType.LessEqualsToken, typeof(float), typeof(int), typeof(float)),
+            new(BinaryOperatorType.LessEqual, SyntaxTokenType.LessEqualsToken, typeof(int), typeof(bool)),
+            new(BinaryOperatorType.LessEqual, SyntaxTokenType.LessEqualsToken, typeof(float), typeof(bool)),
+            new(BinaryOperatorType.LessEqual, SyntaxTokenType.LessEqualsToken, typeof(int), typeof(float), typeof(bool)),
+            new(BinaryOperatorType.LessEqual, SyntaxTokenType.LessEqualsToken, typeof(float), typeof(int), typeof(bool)),
             
-            new(BinaryOperatorType.MoreEqual, SyntaxTokenType.MoreEqualsToken, typeof(int)),
-            new(BinaryOperatorType.MoreEqual, SyntaxTokenType.MoreEqualsToken, typeof(float)),
-            new(BinaryOperatorType.MoreEqual, SyntaxTokenType.MoreEqualsToken, typeof(int), typeof(float), typeof(float)),
-            new(BinaryOperatorType.MoreEqual, SyntaxTokenType.MoreEqualsToken, typeof(float), typeof(int), typeof(float)),
+            new(BinaryOperatorType.MoreEqual, SyntaxTokenType.MoreEqualsToken, typeof(int), typeof(bool)),
+            new(BinaryOperatorType.MoreEqual, SyntaxTokenType.MoreEqualsToken, typeof(float), typeof(bool)),
+            new(BinaryOperatorType.MoreEqual, SyntaxTokenType.MoreEqualsToken, typeof(int), typeof(float), typeof(bool)),
+            new(BinaryOperatorType.MoreEqual, SyntaxTokenType.MoreEqualsToken, typeof(float), typeof(int), typeof(bool)),
+            
+            new(BinaryOperatorType.Equal, SyntaxTokenType.EqualsEqualsToken, typeof(int), typeof(bool)),
+            new(BinaryOperatorType.Equal, SyntaxTokenType.EqualsEqualsToken, typeof(float), typeof(bool)),
+            new(BinaryOperatorType.Equal, SyntaxTokenType.EqualsEqualsToken, typeof(bool)),
+            new(BinaryOperatorType.Equal, SyntaxTokenType.EqualsEqualsToken, typeof(int), typeof(float), typeof(bool)),
+            new(BinaryOperatorType.Equal, SyntaxTokenType.EqualsEqualsToken, typeof(float), typeof(int), typeof(bool)),
             
             new(BinaryOperatorType.LogicalAnd, SyntaxTokenType.DoubleAmpersandToken, typeof(bool)),
             new(BinaryOperatorType.LogicalOr, SyntaxTokenType.DoublePipeToken, typeof(bool))
