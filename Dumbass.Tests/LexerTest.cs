@@ -48,6 +48,7 @@ namespace Dumbass.Tests
                 (")", SyntaxTokenType.ClosedParenToken),
                 ("||", SyntaxTokenType.DoublePipeToken),
                 ("&&", SyntaxTokenType.DoubleAmpersandToken),
+                ("==", SyntaxTokenType.EqualsEqualsToken),
                 ("False", SyntaxTokenType.FalseKeyword),
                 ("True", SyntaxTokenType.TrueKeyword),
                 ("_Test", SyntaxTokenType.VariableToken),
