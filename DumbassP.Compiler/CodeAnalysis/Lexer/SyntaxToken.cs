@@ -9,7 +9,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Lexer
         public readonly string Text;
         public readonly object Value;
         public readonly int Position;
-        public TextSpan TextSpan => new(Position, Text.Length);
+        public TextSpan TextSpan => new(Position - Text.Length, Text.Length);
         public override SyntaxTokenType Type { get; }
 
         public SyntaxToken(string text, object value, SyntaxTokenType type, int position)
