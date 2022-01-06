@@ -50,6 +50,7 @@
                 SyntaxTokenType.MoreThanToken => ">",
                 SyntaxTokenType.LessEqualsToken => "<=",
                 SyntaxTokenType.MoreEqualsToken => ">=",
+                SyntaxTokenType.EqualsEqualsToken => "==",
                 /*
                 SyntaxTokenType.OpenBracketToken => "{",
                 SyntaxTokenType.ClosedBracketToken => "}",
@@ -57,7 +58,6 @@
                 SyntaxTokenType.BangToken => "!",
                 SyntaxTokenType.EqualsToken => "=",
                 SyntaxTokenType.NotEqualsToken => "!=",
-                SyntaxTokenType.EqualsEqualsToken => "==",
                 SyntaxTokenType.StarStarToken => "**",
                 SyntaxTokenType.PlusEqualsToken => "+=",
                 SyntaxTokenType.MinusEqualsToken => "-=",
