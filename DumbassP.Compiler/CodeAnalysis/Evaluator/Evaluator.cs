@@ -52,7 +52,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Evaluator
                     BinaryOperatorType.MoreThan => Convert.ToSingle(left) > Convert.ToSingle(right),
                     BinaryOperatorType.LessEqual => Convert.ToSingle(left) <= Convert.ToSingle(right),
                     BinaryOperatorType.MoreEqual => Convert.ToSingle(left) >= Convert.ToSingle(right),
-                    BinaryOperatorType.Equal => Convert.ToSingle(left) == Convert.ToSingle(right),
+                    BinaryOperatorType.Equal => Equals(left, right),
                     _ => throw new Exception($"Unexpected binary operator {b.Op}")
                 };
             }
@@ -70,7 +70,7 @@ namespace DumbassP.Compiler.CodeAnalysis.Evaluator
                 BinaryOperatorType.MoreThan => (int)left > (int)right,
                 BinaryOperatorType.LessEqual => (int)left <= (int)right,
                 BinaryOperatorType.MoreEqual => (int)left >= (int)right,
-                BinaryOperatorType.Equal => (int)left == (int)right,
+                BinaryOperatorType.Equal => Equals(left, right),
                 _ => throw new Exception($"Unexpected binary operator {b.Op}")
             };
         }
