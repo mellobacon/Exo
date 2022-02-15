@@ -2,6 +2,7 @@
 {
     public enum BoundType
     {
+        AssignmentExpression,
         BinaryExpression,
         LiteralExpression
     }

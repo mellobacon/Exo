@@ -39,9 +39,23 @@ namespace DumbassP.Compiler.CodeAnalysis.Parser
         public SyntaxTree Parse()
         {
             // recursive decent parser
-            ExpressionSyntax expression = ParseBinaryExpression();
+            ExpressionSyntax expression = ParseAssignmentExpression();
             SyntaxToken eof_token = MatchToken(SyntaxTokenType.EofToken);
             return new SyntaxTree(expression, eof_token, _errors);
+        }
+
+        
+        private ExpressionSyntax ParseAssignmentExpression()
+        {
+            if (Current.Type == SyntaxTokenType.VariableToken && Peek(1).Type == SyntaxTokenType.EqualsToken)
+            {
+                SyntaxToken variable = NextToken();
+                SyntaxToken equalstoken = NextToken();
+                ExpressionSyntax expression = ParseAssignmentExpression();
+                return new AssignmentExpression(variable, equalstoken, expression);
+            }
+            
+            return ParseBinaryExpression();
         }
 
         private ExpressionSyntax ParseBinaryExpression(int precedence = 0)

@@ -29,6 +29,7 @@
             {
                 "True" => SyntaxTokenType.TrueKeyword,
                 "False" => SyntaxTokenType.FalseKeyword,
+                "var" => SyntaxTokenType.VariableKeyword,
                 _ => SyntaxTokenType.VariableToken
             };
         }
@@ -50,14 +51,14 @@
                 SyntaxTokenType.MoreThanToken => ">",
                 SyntaxTokenType.LessEqualsToken => "<=",
                 SyntaxTokenType.MoreEqualsToken => ">=",
+                SyntaxTokenType.EqualsEqualsToken => "==",
+                SyntaxTokenType.EqualsToken => "=",
                 /*
                 SyntaxTokenType.OpenBracketToken => "{",
                 SyntaxTokenType.ClosedBracketToken => "}",
                 SyntaxTokenType.SemicolonToken => ";",
                 SyntaxTokenType.BangToken => "!",
-                SyntaxTokenType.EqualsToken => "=",
                 SyntaxTokenType.NotEqualsToken => "!=",
-                SyntaxTokenType.EqualsEqualsToken => "==",
                 SyntaxTokenType.StarStarToken => "**",
                 SyntaxTokenType.PlusEqualsToken => "+=",
                 SyntaxTokenType.MinusEqualsToken => "-=",
