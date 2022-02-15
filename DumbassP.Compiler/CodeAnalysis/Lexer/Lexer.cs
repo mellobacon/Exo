@@ -224,6 +224,11 @@ namespace DumbassP.Compiler.CodeAnalysis.Lexer
                         _type = SyntaxTokenType.EqualsEqualsToken;
                         Advance(2);
                     }
+                    else
+                    {
+                        _type = SyntaxTokenType.EqualsToken;
+                        Advance(1);
+                    }
 
                     break;
                 case '|':

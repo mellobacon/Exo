@@ -22,12 +22,16 @@
         DoublePipeToken,
         DoubleAmpersandToken,
         
+        EqualsToken,
+        
         TrueKeyword,
         FalseKeyword,
+        VariableKeyword,
         
         BinaryExpression,
         LiteralExpression,
         GroupedExpression,
+        AssignmentExpression,
 
         WhiteSpaceToken,
         BadToken,
