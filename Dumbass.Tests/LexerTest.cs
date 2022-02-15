@@ -40,6 +40,7 @@ namespace Dumbass.Tests
                 ("/", SyntaxTokenType.SlashToken),
                 ("*", SyntaxTokenType.StarToken),
                 ("%", SyntaxTokenType.ModuloToken),
+                ("^", SyntaxTokenType.HatToken),
                 ("<", SyntaxTokenType.LessThanToken),
                 (">", SyntaxTokenType.MoreThanToken),
                 ("<=", SyntaxTokenType.LessEqualsToken),

@@ -11,6 +11,7 @@
         SlashToken,
         StarToken,
         ModuloToken,
+        HatToken,
         LessThanToken,
         MoreThanToken,
         LessEqualsToken,
@@ -18,7 +19,7 @@
         EqualsEqualsToken,
         OpenParenToken,
         ClosedParenToken,
-        
+
         DoublePipeToken,
         DoubleAmpersandToken,
         

@@ -7,6 +7,7 @@
             // follows pemdas
             return type switch
             {
+                SyntaxTokenType.HatToken => 6,
                 SyntaxTokenType.SlashToken => 5,
                 SyntaxTokenType.StarToken => 5,
                 SyntaxTokenType.PlusToken => 4,
@@ -53,6 +54,7 @@
                 SyntaxTokenType.MoreEqualsToken => ">=",
                 SyntaxTokenType.EqualsEqualsToken => "==",
                 SyntaxTokenType.EqualsToken => "=",
+                SyntaxTokenType.HatToken => "^",
                 /*
                 SyntaxTokenType.OpenBracketToken => "{",
                 SyntaxTokenType.ClosedBracketToken => "}",
