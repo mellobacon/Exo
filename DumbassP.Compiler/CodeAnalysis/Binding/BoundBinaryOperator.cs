@@ -52,6 +52,11 @@ namespace DumbassP.Compiler.CodeAnalysis.Binding
             new(BinaryOperatorType.Modulo, SyntaxTokenType.ModuloToken, typeof(int)),
             new(BinaryOperatorType.Modulo, SyntaxTokenType.ModuloToken, typeof(float)),
             
+            new(BinaryOperatorType.Exponent, SyntaxTokenType.HatToken, typeof(int)),
+            new(BinaryOperatorType.Exponent, SyntaxTokenType.HatToken, typeof(float)),
+            new(BinaryOperatorType.Exponent, SyntaxTokenType.HatToken, typeof(int), typeof(float), typeof(float)),
+            new(BinaryOperatorType.Exponent, SyntaxTokenType.HatToken, typeof(float), typeof(int), typeof(float)),
+            
             new(BinaryOperatorType.LessThan, SyntaxTokenType.LessThanToken, typeof(int), typeof(bool)),
             new(BinaryOperatorType.LessThan, SyntaxTokenType.LessThanToken, typeof(float), typeof(bool)),
             new(BinaryOperatorType.LessThan, SyntaxTokenType.LessThanToken, typeof(int), typeof(float), typeof(bool)),

@@ -7,6 +7,7 @@
         Multiplication,
         Division,
         Modulo,
+        Exponent,
         LessThan,
         MoreThan,
         LessEqual,
