@@ -34,6 +34,8 @@ namespace Dumbass.Tests
                 ("(1 + 3) * 5 > 2", true),
                 ("1 == 2", false),
                 ("(5 * 10) / 16 == 3.125", true),
+                ("1 == 1", true),
+                ("False == False", true),
                 ("False", false),
                 ("True", true),
                 ("False || True", true),
